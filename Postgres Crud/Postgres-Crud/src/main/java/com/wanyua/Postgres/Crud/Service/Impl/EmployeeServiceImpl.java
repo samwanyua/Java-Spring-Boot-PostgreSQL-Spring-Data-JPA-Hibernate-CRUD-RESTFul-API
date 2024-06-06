@@ -2,6 +2,7 @@ package com.wanyua.Postgres.Crud.Service.Impl;
 
 import com.wanyua.Postgres.Crud.DTO.EmployeeDto;
 import com.wanyua.Postgres.Crud.Entity.Employee;
+import com.wanyua.Postgres.Crud.Exception.ResourceNotFoundException;
 import com.wanyua.Postgres.Crud.Mapper.EmployeeMapper;
 import com.wanyua.Postgres.Crud.Repository.EmployeeRepo;
 import com.wanyua.Postgres.Crud.Service.EmployeeService;
@@ -22,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
-
-        return null;
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee does not exist with the given id: " + employeeId));
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
